@@ -54,9 +54,16 @@ export default function Tooltip({
   };
 
   const getAnimationProps = () => {
-    const initial = { opacity: 0, scale: 0.95 };
-    const animate = { opacity: 1, scale: 1 };
-    const exit = { opacity: 0, scale: 0.95 };
+    type AnimationState = {
+      opacity: number;
+      scale: number;
+      x?: number;
+      y?: number;
+    };
+
+    const initial: AnimationState = { opacity: 0, scale: 0.95 };
+    const animate: AnimationState = { opacity: 1, scale: 1 };
+    const exit: AnimationState = { opacity: 0, scale: 0.95 };
 
     switch (position) {
       case 'top':
