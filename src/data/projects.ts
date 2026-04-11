@@ -39,10 +39,10 @@ export const projects: Project[] = [
       { category: 'Key Features', items: ['WebRTC', 'Encrypted Messaging'] }
     ],
     links: [
-      { label: 'View Live', url: 'https://lnkd.in/dVrFq8nn' },
-      { label: 'Web Version', url: 'https://lnkd.in/d5yy7HbU' },
-      { label: 'Android App', url: 'https://lnkd.in/dpRiSKHG' },
-      { label: 'Windows PC', url: 'https://lnkd.in/dBbB3VqK' }
+      { label: 'View Live', url: 'https://twilight-garden.vercel.app/' },
+      { label: 'Web Version', url: 'https://twilight-garden.vercel.app/' },
+      { label: 'Android App', url: 'https://play.google.com/store/apps/details?id=com.twilightgarden' },
+      { label: 'Windows PC', url: 'https://github.com/AdityaRoy999/Twilight-Garden/releases' }
     ],
     color: '#F472B6',
     image: '/projects/twilight.png',
@@ -84,7 +84,7 @@ export const projects: Project[] = [
       { category: 'Interactive', items: ['Framer Motion'] }
     ],
     links: [
-      { label: 'Live Platform', url: 'https://www.newtudu.tech/' }
+      { label: 'Live Platform', url: 'https://tudu-beta-wine.vercel.app/' }
     ],
     color: '#22D3EE',
     image: '/projects/TuDu.png',

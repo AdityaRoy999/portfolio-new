@@ -5,6 +5,7 @@ import { gsap } from '@/lib/gsap';
 import { Link } from 'next-view-transitions';
 import type { Project } from '@/data/projects';
 import SplitText from '@/components/ui/SplitText';
+import LivePreview from '@/components/ui/LivePreview';
 import Footer from '@/components/layout/Footer';
 import { ArrowLeft, ArrowUpRight, ExternalLink, Code } from 'lucide-react';
 
@@ -18,6 +19,11 @@ export default function ProjectContent({ project, nextProject }: ProjectContentP
   const titleRef = useRef<HTMLDivElement>(null);
   const metaRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
+
+  // Find a live preview URL from links
+  const liveUrl = project.links?.find(l => 
+    /live|site|version|platform|demo/i.test(l.label)
+  )?.url;
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -169,14 +175,22 @@ export default function ProjectContent({ project, nextProject }: ProjectContentP
       {/* Body content */}
       <div ref={bodyRef} className="section-spacing">
         <div className="container-main">
-          {/* Project image */}
-          <div className="content-block rounded-xl overflow-hidden mb-16 relative">
-            <img 
-              src={project.image} 
-              alt={project.title}
-              className="w-full h-auto block"
+          {/* Project image or Live Preview */}
+          {liveUrl ? (
+            <LivePreview 
+              url={liveUrl} 
+              poster={project.image} 
+              title={project.title} 
             />
-          </div>
+          ) : (
+            <div className="content-block rounded-xl overflow-hidden mb-16 relative">
+              <img 
+                src={project.image} 
+                alt={project.title}
+                className="w-full h-auto block"
+              />
+            </div>
+          )}
 
           {/* Long description */}
           <div className="content-block space-y-6">
