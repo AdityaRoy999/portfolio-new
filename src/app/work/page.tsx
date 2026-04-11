@@ -59,7 +59,7 @@ export default function WorkArchive() {
 
                 {/* Tech Stack */}
                 <div className="hidden lg:flex flex-wrap gap-2 flex-1 justify-end">
-                  {project.tech.map((t) => (
+                  {project.tech.flatMap(cat => cat.items).map((t) => (
                     <span
                       key={t}
                       className="text-xs font-mono text-text-secondary border border-border px-2 py-1 rounded-full group-hover:border-text-secondary transition-colors"
