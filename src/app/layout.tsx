@@ -28,7 +28,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: 'Aditya Roy — Full Stack Web Developer & Cybersecurity Enthusiast',
   description: 'Full Stack Web Developer and Cybersecurity Enthusiast building secure, scalable web applications.',
-  url: 'https://adityaroy.dev',
+  metadataBase: new URL('https://adityaroy.dev'),
   keywords: [
     'full stack web developer',
     'cybersecurity',
