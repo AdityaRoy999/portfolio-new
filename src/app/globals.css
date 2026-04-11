@@ -18,6 +18,7 @@
   --accent: #E8FF47;
   --accent-warm: #FF6B35;
   --overlay: rgba(10, 10, 10, 0.95);
+  --header-bg: #000000;
 
   /* Typography */
   --font-display: 'Cormorant Garamond', serif;
@@ -49,6 +50,7 @@
   --accent: #9DBB00; /* Darker neon for visibility */
   --accent-warm: #E24810;
   --overlay: rgba(250, 250, 250, 0.95);
+  --header-bg: var(--bg);
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
