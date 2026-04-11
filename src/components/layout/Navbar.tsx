@@ -100,7 +100,7 @@ export default function Navbar() {
         ref={navRef}
         className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
           scrolled
-            ? 'bg-[var(--header-bg)] border-b border-border'
+            ? 'bg-[var(--header-bg)]'
             : 'bg-transparent'
         }`}
       >
