@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
 import SplitText from '@/components/ui/SplitText';
 import FillButton from '@/components/ui/FillButton';
+import Particles from '@/components/ui/Particles';
 import { ArrowDown, Download } from 'lucide-react';
 
 export default function Hero() {
@@ -12,9 +13,11 @@ export default function Hero() {
   const subtextRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const scrollIndicatorRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // --- Phase 1: Entrance animation (plays once on load) ---
       const tl = gsap.timeline({ delay: 0.5 });
 
       const words = headlineRef.current?.querySelectorAll('.word');
@@ -54,28 +57,51 @@ export default function Hero() {
         '-=0.2'
       );
 
-      // Differential Parallax on scroll
-      const scrubConfig = {
-        trigger: sectionRef.current,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1,
-      };
+      // --- Phase 2: Scroll-driven exit (scrub based) ---
+      // This only activates AFTER the user scrolls past the hero
+      gsap.fromTo(
+        contentRef.current,
+        {
+          scale: 1,
+          opacity: 1,
+          filter: 'blur(0px)',
+          y: 0,
+        },
+        {
+          scale: 0.85,
+          opacity: 0,
+          filter: 'blur(8px)',
+          y: -80,
+          ease: 'none',
+          immediateRender: false,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 1,
+          },
+        }
+      );
 
-      gsap.to(headlineRef.current, {
-        y: -150,
-        scrollTrigger: scrubConfig,
-      });
-
-      gsap.to(subtextRef.current, {
-        y: -100,
-        scrollTrigger: scrubConfig,
-      });
-
-      gsap.to(ctaRef.current, {
-        y: -50,
-        scrollTrigger: scrubConfig,
-      });
+      gsap.fromTo(
+        scrollIndicatorRef.current,
+        {
+          opacity: 1,
+          y: 0,
+        },
+        {
+          opacity: 0,
+          y: 30,
+          ease: 'none',
+          immediateRender: false,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'center center',
+            end: 'bottom top',
+            scrub: 1,
+          },
+        }
+      );
     }, sectionRef);
 
     return () => ctx.revert();
@@ -87,6 +113,25 @@ export default function Hero() {
       className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden pb-40 pt-24"
       id="hero"
     >
+      {/* Particles with fade at bottom */}
+      <div 
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{
+          maskImage: 'linear-gradient(to bottom, black 0%, black 70%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 70%, transparent 100%)'
+        }}
+      >
+        <Particles 
+          particleCount={250} 
+          particleColors={['#ffffff']} 
+          alphaParticles={true}
+          sizeRandomness={1}
+          particleHoverFactor={2.5}
+          speed={0.1}
+          moveParticlesOnHover={true}
+        />
+      </div>
+
       {/* Subtle grid background */}
       <div className="absolute inset-0 z-0">
         <div
@@ -100,7 +145,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="container-main relative z-10 flex flex-col items-center text-center max-w-5xl w-full">
+      <div ref={contentRef} className="container-main relative z-10 flex flex-col items-center text-center max-w-5xl w-full">
         {/* Intro label */}
         <div className="mb-8 overflow-hidden">
           <p className="text-label text-text-secondary">

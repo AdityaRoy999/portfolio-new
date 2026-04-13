@@ -3,51 +3,29 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
 import { services } from '@/data/skills';
-import SplitText from '@/components/ui/SplitText';
+import HoverSplitText from '@/components/ui/HoverSplitText';
 
 export default function Skills() {
   const sectionRef = useRef<HTMLElement>(null);
-  const headlineRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Headline
-      const words = headlineRef.current?.querySelectorAll('.word');
-      if (words) {
-        gsap.fromTo(
-          words,
-          { y: 60, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            stagger: 0.05,
-            duration: 1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: headlineRef.current,
-              start: 'top 85%',
-            },
-          }
-        );
-      }
-
       // Cards stagger in and organic drift
       cardsRef.current.forEach((card, i) => {
         if (!card) return;
-        const delay = (i % 2) * 0.1;
         gsap.fromTo(
           card,
-          { y: 60, opacity: 0 },
+          { y: 30, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.8,
-            delay: delay,
-            ease: 'power3.out',
+            ease: 'none',
             scrollTrigger: {
               trigger: card,
-              start: 'top 95%',
+              start: 'top 98%',
+              end: 'top 70%',
+              scrub: true,
             }
           }
         );
@@ -61,10 +39,13 @@ export default function Skills() {
     <section ref={sectionRef} id="skills" className="section-spacing">
       <div className="container-main">
         <p className="text-label mb-4">What I Do</p>
-        <div ref={headlineRef} className="mb-16">
-          <SplitText className="text-h1 font-display text-text-primary" type="words">
-            Expertise
-          </SplitText>
+        <div className="mb-16">
+          <HoverSplitText
+            text="Expertise"
+            className="text-h2 lg:text-h1 font-display text-text-primary"
+            defaultColor="text-text-primary"
+            hoverColor="text-text-primary"
+          />
         </div>
 
         {/* Cards — simple responsive grid, no horizontal scroll */}
@@ -73,7 +54,7 @@ export default function Skills() {
             <div
               key={service.title}
               ref={(el) => { cardsRef.current[i] = el; }}
-              className="relative glass rounded-2xl p-8 md:p-10 flex flex-col gap-6 group grain"
+              className="relative glass glass-glow rounded-2xl p-8 md:p-10 flex flex-col gap-6 group grain transition-all duration-500"
             >
               {/* Icon */}
               <span className="text-4xl leading-none">{service.icon}</span>
@@ -106,12 +87,6 @@ export default function Skills() {
                 ))}
               </ul>
 
-              {/* Hover glow */}
-              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style={{
-                  background: 'radial-gradient(circle at 50% 0%, rgba(232, 255, 71, 0.04) 0%, transparent 60%)',
-                }}
-              />
             </div>
           ))}
         </div>

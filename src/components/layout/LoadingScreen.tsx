@@ -125,8 +125,8 @@ export default function LoadingScreen() {
             </div>
 
             {/* Role */}
-            <div ref={roleRef} style={{ opacity: 0 }}>
-              <p className="text-xs font-mono uppercase tracking-[0.3em] text-text-muted">
+            <div ref={roleRef} className="w-full flex justify-center" style={{ opacity: 0 }}>
+              <p className="max-w-[90vw] text-center text-[10px] sm:text-xs font-mono uppercase tracking-[0.14em] sm:tracking-[0.3em] text-text-muted leading-relaxed">
                 Full Stack Web Developer &bull; Cybersecurity
               </p>
             </div>

@@ -6,7 +6,6 @@ import { Link } from 'next-view-transitions';
 import type { Project } from '@/data/projects';
 import SplitText from '@/components/ui/SplitText';
 import LivePreview from '@/components/ui/LivePreview';
-import Footer from '@/components/layout/Footer';
 import { ArrowLeft, ArrowUpRight, ExternalLink, Code } from 'lucide-react';
 
 interface ProjectContentProps {
@@ -152,9 +151,9 @@ export default function ProjectContent({ project, nextProject }: ProjectContentP
             <p className="text-label mb-2">Links</p>
             <div className="flex flex-col gap-2">
               {project.links && project.links.length > 0 ? (
-                project.links.map((link) => (
+                project.links.map((link, index) => (
                   <a
-                    key={link.url}
+                    key={`${project.slug}-${link.label}-${link.url}-${index}`}
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -230,7 +229,7 @@ export default function ProjectContent({ project, nextProject }: ProjectContentP
       <Link
         href={`/work/${nextProject.slug}`}
         className="block section-spacing relative group no-underline"
-        data-cursor="image"
+        data-cursor="link"
       >
         <div className="container-main text-center">
           <p className="text-label mb-6">Next Project</p>
@@ -247,7 +246,7 @@ export default function ProjectContent({ project, nextProject }: ProjectContentP
         </div>
       </Link>
 
-      <Footer />
+      {/* Footer is rendered globally in ClientProviders (src/app/providers.tsx) */}
     </main>
   );
 }

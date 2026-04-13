@@ -1,7 +1,26 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './src/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/layout/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/sections/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/ui/!(TextPressure|Particles).tsx',
+    './src/data/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/hooks/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/lib/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  safelist: [
+    'relative',
+    'w-full',
+    'h-full',
+    'overflow-hidden',
+    'bg-transparent',
+    'inline-block',
+    'flex',
+    'justify-between',
+    'uppercase',
+    'text-center',
+    'stroke',
   ],
   theme: {
     extend: {

@@ -2,50 +2,30 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
-import SplitText from '@/components/ui/SplitText';
+import HoverSplitText from '@/components/ui/HoverSplitText';
 import FillButton from '@/components/ui/FillButton';
 import { Download } from 'lucide-react';
 
 export default function About() {
   const sectionRef = useRef<HTMLElement>(null);
-  const headlineRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Headline reveal
-      const words = headlineRef.current?.querySelectorAll('.word');
-      if (words) {
-        gsap.fromTo(
-          words,
-          { y: 60, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            stagger: 0.05,
-            duration: 1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: headlineRef.current,
-              start: 'top 85%',
-            },
-          }
-        );
-      }
-
       // Body text reveal
       gsap.fromTo(
         bodyRef.current,
-        { y: 40, opacity: 0 },
+        { y: 20, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 1,
-          ease: 'power3.out',
+          ease: 'none',
           scrollTrigger: {
             trigger: bodyRef.current,
-            start: 'top 85%',
+            start: 'top 92%',
+            end: 'top 72%',
+            scrub: true,
           },
         }
       );
@@ -57,11 +37,12 @@ export default function About() {
           { clipPath: 'inset(100% 0 0 0)' },
           {
             clipPath: 'inset(0% 0 0 0)',
-            duration: 1.2,
-            ease: 'power3.inOut',
+            ease: 'none',
             scrollTrigger: {
               trigger: imageRef.current,
-              start: 'top 80%',
+              start: 'top 90%',
+              end: 'top 50%',
+              scrub: true,
             },
           }
         );
@@ -95,8 +76,15 @@ export default function About() {
   return (
     <section ref={sectionRef} id="about" className="section-spacing relative">
       <div className="container-main">
-        {/* Section label */}
-        <p className="text-label mb-6">About Me</p>
+        <div className="mb-12">
+          <p className="text-label mb-4">About Me</p>
+          <HoverSplitText
+            text="About Me"
+            className="text-h2 lg:text-h1 font-display text-text-primary"
+            defaultColor="text-text-primary"
+            hoverColor="text-text-primary"
+          />
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
           {/* Image */}
@@ -115,14 +103,9 @@ export default function About() {
 
           {/* Text content */}
           <div className="flex flex-col gap-8">
-            <div ref={headlineRef}>
-              <SplitText
-                className="text-h2 font-display text-text-primary"
-                type="words"
-              >
-                Security-first developer who writes clean, reliable code
-              </SplitText>
-            </div>
+            <h3 className="text-h3 lg:text-h2 font-display text-text-primary max-w-[22ch] leading-tight">
+              Security-first developer who writes clean, reliable code
+            </h3>
 
             <div ref={bodyRef} className="space-y-6 text-text-secondary leading-relaxed">
               <p>

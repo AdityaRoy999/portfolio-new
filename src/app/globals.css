@@ -295,6 +295,21 @@ textarea:-webkit-autofill:active {
   border: 1px solid var(--border);
 }
 
+/* Theme-aware hover glow for cards */
+.glass-glow {
+  transition: border-color 0.5s, box-shadow 0.5s;
+}
+
+:root[data-theme="dark"] .glass-glow:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.08), 0 0 60px rgba(255, 255, 255, 0.04);
+}
+
+:root[data-theme="light"] .glass-glow:hover {
+  border-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.08), 0 0 60px rgba(0, 0, 0, 0.04);
+}
+
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    GRAIN TEXTURE OVERLAY
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
@@ -399,8 +414,14 @@ textarea:-webkit-autofill:active {
   text-transform: uppercase;
   transition: border-color 0.4s var(--ease-expo), color 0.4s var(--ease-expo);
   /* The default border */
+  /* Elegant ultra-thin border rendering */
   border: 1px solid var(--border);
+  box-shadow: none;
   color: var(--text-primary);
+  isolation: isolate;
+  transform: translateZ(0); /* Hardware acceleration for smooth curves */
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 .hover-fill-btn.primary {
@@ -411,7 +432,7 @@ textarea:-webkit-autofill:active {
 .hover-fill-btn::before {
   content: '';
   position: absolute;
-  inset: -1px; /* Cover pixel imperfect borders */
+  inset: -1px; /* Perfect overlap with the 1px border */
   border-radius: inherit;
   z-index: 0;
   /* The fill circle tied to the cursor CSS variables */
@@ -431,11 +452,13 @@ textarea:-webkit-autofill:active {
 
 .hover-fill-btn:hover {
   color: var(--bg) !important;
-  border-color: transparent !important;
+  border-color: var(--accent) !important;
 }
 
 .hover-fill-btn svg,
 .hover-fill-btn span {
+  position: relative;
+  z-index: 1;
   transition: color 0.4s var(--ease-expo);
 }
 

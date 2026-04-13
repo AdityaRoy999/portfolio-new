@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import FillButton from '@/components/ui/FillButton';
 import { useTheme } from 'next-themes';
 import { Sun, Moon } from 'lucide-react';
+import HoverSplitText from '@/components/ui/HoverSplitText';
 
 const NAV_LINKS = [
   { label: 'About', href: '#about' },
@@ -129,10 +130,10 @@ export default function Navbar() {
                 key={link.label}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="link-underline text-sm font-sans font-medium text-text-secondary hover:text-text-primary transition-colors duration-300 uppercase tracking-[0.1em]"
+                className="text-sm font-sans font-medium transition-colors duration-300 uppercase tracking-[0.1em]"
                 data-cursor="link"
               >
-                {link.label}
+                <HoverSplitText text={link.label} />
               </a>
             ))}
             <FillButton
@@ -227,7 +228,7 @@ export default function Navbar() {
                 }}
                 onClick={(e) => handleNavClick(e, link.href)}
               >
-                {link.label}
+                <HoverSplitText text={link.label} className="!overflow-visible" hoverColor="text-accent" />
               </motion.a>
             ))}
             <FillButton

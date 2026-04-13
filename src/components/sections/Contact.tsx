@@ -1,11 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { gsap } from '@/lib/gsap';
-import SplitText from '@/components/ui/SplitText';
+import { useState } from 'react';
 import emailjs from '@emailjs/browser';
-import MagneticButton from '@/components/ui/MagneticButton';
 import { Mail, Copy, Check, ArrowUpRight } from 'lucide-react';
+import HoverSplitText from '@/components/ui/HoverSplitText';
 
 /* Inline brand SVGs — Lucide doesn't include brand icons */
 const GitHubIcon = () => (
@@ -27,8 +25,6 @@ const SOCIALS = [
 ];
 
 export default function Contact() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const headlineRef = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [errors, setErrors] = useState<Record<string, boolean>>({});
@@ -87,34 +83,8 @@ export default function Contact() {
     }
   };
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const words = headlineRef.current?.querySelectorAll('.word');
-      if (words) {
-        gsap.fromTo(
-          words,
-          { y: 80, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            stagger: 0.06,
-            duration: 1.2,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: headlineRef.current,
-              start: 'top 80%',
-            },
-          }
-        );
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
     <section
-      ref={sectionRef}
       id="contact"
       className="section-spacing relative overflow-hidden"
     >
@@ -133,13 +103,13 @@ export default function Contact() {
           <p className="text-label mb-6">Get In Touch</p>
 
           {/* Giant headline */}
-          <div ref={headlineRef} className="mb-16">
-            <SplitText
-              className="text-display font-display text-text-primary"
-              type="words"
-            >
-              Let&apos;s Talk
-            </SplitText>
+          <div className="mb-16">
+            <HoverSplitText
+              text="Let's Talk"
+              className="text-h2 lg:text-h1 font-display text-text-primary"
+              defaultColor="text-text-primary"
+              hoverColor="text-text-primary"
+            />
           </div>
 
           {/* Email */}

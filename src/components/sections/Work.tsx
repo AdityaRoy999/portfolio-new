@@ -1,56 +1,36 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { gsap } from '@/lib/gsap';
 import { projects } from '@/data/projects';
 import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'next-view-transitions';
-import SplitText from '@/components/ui/SplitText';
+import HoverSplitText from '@/components/ui/HoverSplitText';
 
 export default function Work() {
   const sectionRef = useRef<HTMLElement>(null);
-  const headlineRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
   const [activeProject, setActiveProject] = useState<number | null>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Headline
-      const words = headlineRef.current?.querySelectorAll('.word');
-      if (words) {
-        gsap.fromTo(
-          words,
-          { y: 60, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            stagger: 0.05,
-            duration: 1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: headlineRef.current,
-              start: 'top 85%',
-            },
-          }
-        );
-      }
-
       // Project rows stagger in
       const rows = listRef.current?.querySelectorAll('.project-row');
       if (rows) {
         gsap.fromTo(
           rows,
-          { y: 40, opacity: 0 },
+          { y: 25, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            stagger: 0.08,
-            duration: 0.8,
-            ease: 'power3.out',
+            stagger: 0.05,
+            ease: 'none',
             scrollTrigger: {
               trigger: listRef.current,
-              start: 'top 80%',
+              start: 'top 92%',
+              end: 'top 55%',
+              scrub: true,
             },
           }
         );
@@ -64,14 +44,19 @@ export default function Work() {
   useEffect(() => {
     if (!previewRef.current) return;
 
+    const xTo = gsap.quickTo(previewRef.current, 'x', {
+      duration: 0.4,
+      ease: 'power2.out',
+    });
+    const yTo = gsap.quickTo(previewRef.current, 'y', {
+      duration: 0.4,
+      ease: 'power2.out',
+    });
+
     const handleMouseMove = (e: MouseEvent) => {
       if (activeProject === null) return;
-      gsap.to(previewRef.current, {
-        x: e.clientX - 150,
-        y: e.clientY - 100,
-        duration: 0.4,
-        ease: 'power2.out',
-      });
+      xTo(e.clientX - 150);
+      yTo(e.clientY - 100);
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -85,11 +70,12 @@ export default function Work() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-16">
           <div>
             <p className="text-label mb-4">Selected Work</p>
-            <div ref={headlineRef}>
-              <SplitText className="text-h1 font-display text-text-primary" type="words">
-                Featured Projects
-              </SplitText>
-            </div>
+            <HoverSplitText
+              text="Featured Projects"
+              className="text-h2 lg:text-h1 font-display text-text-primary"
+              defaultColor="text-text-primary"
+              hoverColor="text-text-primary"
+            />
           </div>
           <p className="text-mono text-sm text-text-muted">2024 — 2025</p>
         </div>
@@ -148,12 +134,18 @@ export default function Work() {
         <div className="mt-12 text-center">
           <Link
             href="/work"
-            className="inline-flex items-center gap-2 text-sm font-mono uppercase tracking-[0.15em] text-text-secondary hover:text-accent transition-colors duration-300 link-underline"
+            className="group inline-flex items-center gap-2"
             data-cursor="link"
             data-cursor-label="All Work"
           >
-            View All Work
-            <ArrowUpRight size={14} className="transition-transform hover:translate-x-0.5 hover:-translate-y-0.5" />
+            <HoverSplitText
+              text="View All Work"
+              className="text-sm font-mono uppercase tracking-[0.15em]"
+              defaultColor="text-text-secondary"
+              hoverColor="text-accent"
+              underlineClassName="bg-accent"
+            />
+            <ArrowUpRight size={14} className="text-text-secondary transition-all duration-300 group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
         </div>
       </div>

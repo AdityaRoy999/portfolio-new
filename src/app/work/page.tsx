@@ -2,7 +2,6 @@ import { projects } from '@/data/projects';
 import { ArrowLeft, ArrowUpRight } from 'lucide-react';
 import { Link } from 'next-view-transitions';
 import SplitText from '@/components/ui/SplitText';
-import Footer from '@/components/layout/Footer';
 
 export const metadata = {
   title: 'All Work | Aditya Roy',
@@ -38,7 +37,7 @@ export default function WorkArchive() {
               key={project.slug}
               href={`/work/${project.slug}`}
               className="group block border-t border-border last:border-b py-8 md:py-10 no-underline"
-              data-cursor="image"
+              data-cursor="pill"
               data-cursor-label={`0${i + 1}`}
             >
               <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
@@ -86,7 +85,7 @@ export default function WorkArchive() {
           ))}
         </div>
       </div>
-      <Footer />
+      {/* Footer is provided globally by ClientProviders (src/app/providers.tsx) */}
     </main>
   );
 }
