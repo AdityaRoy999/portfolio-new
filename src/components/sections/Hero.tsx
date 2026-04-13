@@ -189,7 +189,7 @@ export default function Hero() {
             <span>View My Work</span>
             <ArrowDown size={16} />
           </FillButton>
-          <FillButton href="/resume.pdf" download="Aditya-Roy-Resume.pdf" className="primary" data-cursor="link">
+          <FillButton href="/AR%20Resume.pdf" download="Aditya-Roy-Resume.pdf" className="primary" data-cursor="link">
             <Download size={14} />
             <span>Download Resume</span>
           </FillButton>

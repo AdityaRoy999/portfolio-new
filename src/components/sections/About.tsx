@@ -130,7 +130,7 @@ export default function About() {
             </div>
 
             {/* Resume download */}
-            <FillButton href="/resume.pdf" download="Aditya-Roy-Resume.pdf" className="primary self-start" data-cursor="link" data-cursor-label="Download">
+            <FillButton href="/AR%20Resume.pdf" download="Aditya-Roy-Resume.pdf" className="primary self-start" data-cursor="link" data-cursor-label="Download">
               <Download size={14} />
               <span>Download Resume</span>
             </FillButton>

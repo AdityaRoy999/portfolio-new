@@ -86,7 +86,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="section-spacing relative overflow-hidden"
+      className="section-spacing pb-10 md:pb-14 relative overflow-hidden"
     >
       {/* Background glow */}
       <div
